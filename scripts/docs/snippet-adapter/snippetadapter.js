@@ -21,10 +21,15 @@ module.exports = function snippetAdapter( data ) {
 	return runWebpack( webpackConfig )
 		.then( () => {
 			return {
-				html: generateSnippetHtml( {
-					htmlPath: data.snippetSource.html,
-					scriptPath: path.join( data.relativeOutputPath, data.snippetPath, 'snippet.js' )
-				} )
+				html: fs.readFileSync( data.snippetSource.html ),
+				assets: {
+					js: [
+						path.join( data.relativeOutputPath, data.snippetPath, 'snippet.js' )
+					],
+					css: [
+						path.join( data.relativeOutputPath, 'assets', 'snippet-styles.js' )
+					]
+				}
 			};
 		} );
 };
@@ -97,14 +102,6 @@ function runWebpack( webpackConfig ) {
 			}
 		} );
 	} );
-}
-
-function generateSnippetHtml( data ) {
-	let html = fs.readFileSync( data.htmlPath );
-
-	html += `<script src="${ data.scriptPath }"></script>`;
-
-	return html;
 }
 
 function getModuleResolvePaths() {
