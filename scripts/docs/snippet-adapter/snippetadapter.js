@@ -27,7 +27,7 @@ module.exports = function snippetAdapter( data ) {
 						path.join( data.relativeOutputPath, data.snippetPath, 'snippet.js' )
 					],
 					css: [
-						path.join( data.relativeOutputPath, 'assets', 'snippet-styles.js' )
+						path.join( data.basePath, 'assets', 'snippet-styles.css' )
 					]
 				}
 			};
